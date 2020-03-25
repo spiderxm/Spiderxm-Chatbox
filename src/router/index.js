@@ -16,12 +16,11 @@ export default new Router({
       name: 'Chat',
       component: Chat,
       props: true,
-      beforeEnter: (to,from,next) => {
-         console.log(to.params.name);
+      beforeEnter: (to,from,next) => {  //routeguard
          if(to.params.name)
-          next()
+          next()        //natural where it should go by default
          else 
-          next({name: 'Welcome'})
+          next({name: 'Welcome'})    //to pass to next route which it should for abnormality
       }
     }
   ]
