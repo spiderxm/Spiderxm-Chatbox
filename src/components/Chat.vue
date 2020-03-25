@@ -3,12 +3,12 @@
        <h2 class="center black-text">Spiderxm-ChatBox</h2>
        <div class="card">
            <div class="card-content">
-               <ul class="messages">
-                   <!-- <li v-for="(message,index) in messages" v-bind:key="index">  -->
+               <ul class="messages" v-for="message in messages" :key="message.id">
                        <li>
-                       <span class="black-text">Name</span> 
-                       <span class="grey-text text-darken-3">messages</span>
-                       <span class="grey-text time">time</span>
+                       <span class="black-text">{{message.name}}</span> 
+                       <span class="grey-text text-darken-3">{{message.content}}</span>
+                       <br>
+                       <span class="grey-text time">{{message.timestamp}}</span>
                        </li>
                </ul>
            </div>
@@ -20,14 +20,14 @@
 </template>
 <script>
 import NewMessage from '@/components/Newmessage'
-// import db from '@/firebase/init'
+import db from '@/firebase/init'
 export default {
     name:'Chat',
     props : ['name'],
     data(){
-        return {
-            messages 
-        }
+        return { 
+            messages:[]
+               }
     },
     components:{
         NewMessage
@@ -36,6 +36,20 @@ export default {
 
     },
     created(){
+        let ref = db.collection('messages').orderBy('timestamp');
+        ref.onSnapshot(snapshot => {    //taking only the changes
+           snapshot.docChanges().forEach(change => {
+               if(change.type == 'added'){
+                 let doc = change.doc
+                 this.messages.push({
+                     id:doc.id,
+                     name:doc.data().name,
+                     content:doc.data().content,
+                     timestamp:doc.data().timestamp,
+                 })
+               }
+           })
+        })   //on changes
     }
 }
 </script>
