@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-content center-align">
         <h2 class="black-text">
-          WELCOME
+          Welcome to Spiderxm-ChatBox
         </h2>
         <form  @submit.prevent="enterChat">
           <label for="name">Enter your name: </label>
@@ -43,7 +43,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .welcome{
-  max-width: 400px;
+  max-width: 600px;
+  max-height: 200px;
   margin-top: 100px;
 
 }

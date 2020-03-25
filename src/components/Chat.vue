@@ -3,11 +3,10 @@
        <h2 class="center black-text">Spiderxm-ChatBox</h2>
        <div class="card">
            <div class="card-content">
-               <ul class="messages" v-for="message in messages" :key="message.id">
-                       <li>
-                       <span class="black-text">{{message.name}}</span> 
+               <ul class="messages" v-chat-scroll>
+                       <li v-for="message in messages" :key="message.id">
+                       <span class="teal-text">{{message.name}} : </span> 
                        <span class="grey-text text-darken-3">{{message.content}}</span>
-                       <br>
                        <span class="grey-text time">{{message.timestamp}}</span>
                        </li>
                </ul>
@@ -21,6 +20,7 @@
 <script>
 import NewMessage from '@/components/Newmessage'
 import db from '@/firebase/init'
+import moment from 'moment'
 export default {
     name:'Chat',
     props : ['name'],
@@ -45,7 +45,7 @@ export default {
                      id:doc.id,
                      name:doc.data().name,
                      content:doc.data().content,
-                     timestamp:doc.data().timestamp,
+                     timestamp:moment(doc.data().timestamp).format('LLL'),
                  })
                }
            })
@@ -64,7 +64,19 @@ export default {
 }
 .chat .time{
     display: block;
-    font-size:1.2em;
-
+    font-size: 1em;
+}
+.messages{
+    max-height: 400px;
+    overflow: auto;
+}
+.messages::-webkit-scrollbar{
+    width: 5px;
+}
+.messages::-webkit-scrollbar-track{
+    background: grey;
+}
+.messages::-webkit-scrollbar-thumb{
+    background: #aaa;
 }
 </style>
