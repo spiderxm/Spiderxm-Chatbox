@@ -30,7 +30,7 @@ export default {
     enterChat(){
       if(this.name){
       console.log(this.name);
-      this.$router.push({name:''});
+      this.$router.push({name : 'Chat',params: { name: this.name }})
     }
     else{
       this.checker = 'Please enter your name'
